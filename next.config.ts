@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === "production";
+// GITHUB_ACTIONS is auto-set to "true" in GitHub Actions runners.
+// Vercel does NOT set this, so it gets a clean root-level deployment.
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
 
 const nextConfig: NextConfig = {
   output: "export",           // Generate static HTML/CSS/JS in out/
-  basePath: isProd ? "/Portfolio" : "",   // Subpath on GitHub Pages
-  assetPrefix: isProd ? "/Portfolio/" : "",
+  basePath: isGitHubPages ? "/Portfolio" : "",   // Subpath on GitHub Pages
+  assetPrefix: isGitHubPages ? "/Portfolio/" : "",
   images: {
     unoptimized: true,        // Required for static export (no server-side image optimization)
   },
